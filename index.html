@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Animated Gradient Ellipse</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    let startColor, endColor, bgColorStart, bgColorEnd;
+    let maxDiameter;
+
+    function setup() {
+      createCanvas(windowWidth, windowHeight);
+      noStroke();
+
+      // Define colors
+      startColor = color(255, 255, 0); // Yellow
+      endColor = color(0, 0, 255); // Blue
+      bgColorStart = color(255, 100, 0); // Orange
+      bgColorEnd = color(0, 0, 255); // Blue
+
+      maxDiameter = max(width, height);
+    }
+
+    function draw() {
+      // Calculate progress for the animation
+      let progress = (frameCount % maxDiameter) / maxDiameter;
+      if (frameCount % (maxDiameter * 2) >= maxDiameter) {
+        progress = 1 - progress;
+      }
+
+      // Interpolate background color
+      let currentBgColor = lerpColor(bgColorStart, bgColorEnd, progress);
+      background(currentBgColor);
+
+      // Interpolate ellipse color and size
+      let ellipseSize = progress * maxDiameter;
+      let currentColor = lerpColor(startColor, endColor, progress);
+      fill(currentColor);
+
+      // Draw ellipse
+      ellipse(width / 2, height / 2, ellipseSize, ellipseSize);
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+      maxDiameter = max(width, height);
+    }
+  </script>
+</body>
+</html>
