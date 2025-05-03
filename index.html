@@ -52,6 +52,11 @@
       ellipse(width / 2, height / 2, ellipseSize, ellipseSize);
     }
 
+      function mousePressed() {
+      let fs = fullscreen();
+      fullscreen(!fs);
+    }
+
     function windowResized() {
       resizeCanvas(windowWidth, windowHeight);
       maxDiameter = max(width, height);
